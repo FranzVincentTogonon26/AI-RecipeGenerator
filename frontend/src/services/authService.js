@@ -1,19 +1,21 @@
 import axiosInstance from '../libs/axiosInstance'
 import { API_PATHS } from '../libs/apiPaths'
 
-const login = () => {
+const login = async ( email, password ) => {
     try {
-        
+        const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, { email, password });
+        return response.data;
     } catch (error) {
-        throw error.response?.data || { message: 'Aninknown error occur' }
+        throw error.response?.data || { message: 'An unknown error occur' }
     }
 }
 
-const register = () => {
+const register = async ( username, email, password ) => {
     try {
-        
+        const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, { username, email, password });
+        return response.data;
     } catch (error) {
-        throw error.response?.data || { message: 'Aninknown error occur' }
+        throw error.response?.data || { message: 'An unknown error occur' }
     }
 }
 
