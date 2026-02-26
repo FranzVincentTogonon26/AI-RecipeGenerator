@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ArrowRight, Facebook, Github, Lock, Mail, User, } from 'lucide-react'
+import { ArrowRight, Lock, Mail, User, } from 'lucide-react'
 import { Link, useNavigate } from 'react-router'
 import toast from 'react-hot-toast';
 
