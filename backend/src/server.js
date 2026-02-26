@@ -5,6 +5,9 @@ import { ENV } from './libs/env.js'
 import connectDB from './libs/db.js'
 import rateLimiter from './middleware/rateLimiter.js'
 
+import authRoutes from './routes/authRoutes.js'
+import dashboardRoutes from './routes/dashboardRoutes.js'
+
 const app = express();
 
 app.use(
@@ -18,6 +21,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(rateLimiter)
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 connectDB().then( () => {
     app.listen( ENV.PORT, () => {
