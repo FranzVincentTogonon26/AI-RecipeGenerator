@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'  
-import { Toaster } from "sileo";
+import { Toaster } from "react-hot-toast";
 
 import { AuthProvider } from './context/AuthProvider'  
 import ProtectedRoutes from './components/Authentication/ProtectedRoutes'

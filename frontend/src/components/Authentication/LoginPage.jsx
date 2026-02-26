@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import { ArrowRight, Facebook, Github, Lock, Mail, } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowRight, Lock, Mail, } from 'lucide-react'
 import { Link, useNavigate } from 'react-router'
 import toast from 'react-hot-toast';
 
 import authService from '../../services/authService'
 import { useAuth } from "../../context/useAuth"
 
-const socialIcons = [Github, Mail , Facebook];
 
 const LoginPage = () => {
+
   const [ loading, setLoading ] = useState(false);
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -22,10 +22,10 @@ const LoginPage = () => {
     setError(null);
     setLoading(true);
     try {
-      const { user, token }  = await authService.login(email,password);
-      login(user,token);
-      toast.success('Logged in Successfully..');
-      navigate('/notes');
+      const { token, user }  = await authService.login(email,password);
+      login(token, user);
+      toast.success('Logged in Successfully..')
+      navigate('/dashboard');
     } catch (error) {
         setError( error.message || 'Failed to Login..');
         toast.error( error.message || 'Failed to Login.. ')
@@ -43,7 +43,7 @@ const LoginPage = () => {
           <div className="text-center mb-10">
             <h1 className='text-3xl font-bold text-slate-700 tracking-tight'>Login</h1>
           </div>
-          <div className="space-y-5">
+          <div className="space-y-6">
             <div className="space-y-2">
               <label className="block text-xs font-semibold text-slate-800 uppercase tracking-wide">Email</label>
               <div className="relative">
@@ -110,27 +110,7 @@ const LoginPage = () => {
           </div>
 
           {/* Footer */}
-            <div className="space-y-4 pt-10 h-40">
-                <div className='flex items-center justify-center '>
-                  <p className="text-center text-xs text-slate-600 block  font-semibold tracking-wide">
-                  Or Sign Up Using
-                  </p>
-              </div>
-              <div className="flex items-center justify-center tracking-wide">
-                  <div className="flex flex-wrap gap-3">
-                    { socialIcons.map((Icon, index) => (
-                      <a
-                        key={index}
-                        href=""
-                        className="group relative p-2 text-slate-600 hover:scale-110 transition-all duration-200"
-                      >
-                        <Icon className="w-5 h-5 " />
-                      </a>
-                    ))}
-                  </div>
-              </div>
-            </div>
-            <div className="space-y-4 pb-6">
+            <div className="space-y-4 p-8">
                 <div className='flex items-center justify-center '>
                   <p className="text-center text-xs text-slate-600 block  font-semibold tracking-wide">
                   Or Sign Up Using
