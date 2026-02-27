@@ -1,18 +1,15 @@
-import { Link, useNavigate } from 'react-router'
+import { Link, NavLink, useNavigate } from 'react-router'
 import { Calendar, ChefHat, Home, LogOut, Settings, ShoppingCart, UtensilsCrossed } from 'lucide-react'
 import { useAuth } from '../../context/useAuth'
 
-const NavLink = ({to, icon, label}) => {
-    return (
-      <Link
-        to={to}
-        className='flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors'
-      >
-        {icon}
-        <span>{label}</span>
-      </Link>
-    )
-  }
+ const navLinks = [
+    { to: '/dashboard', icon: Home, text: 'Dashboard' },
+    { to: '/pantry', icon: UtensilsCrossed, text: 'Pantry' },
+    { to: '/generate', icon: ChefHat, text: 'Generate' },
+    { to: '/recipes', icon: UtensilsCrossed, text: 'Recipes' },
+    { to: '/meal-plan', icon: Calendar, text: 'Meal Plan' },
+    { to: '/shopping-list', icon: ShoppingCart, text: 'Shopping' }
+  ];
 
 const Navbar = () => {
 
@@ -36,12 +33,30 @@ const Navbar = () => {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-1">
-            <NavLink to='/dashboard' icon={ <Home className='size-4' /> } label='Dashboard' />
-            <NavLink to='/pantry' icon={ <UtensilsCrossed className='size-4' /> } label='Pantry' />
-            <NavLink to='/generate' icon={ <ChefHat className='size-4' /> } label='Generate' />
-            <NavLink to='/recipes' icon={ <UtensilsCrossed className='size-4' /> } label='Recipes' />
-            <NavLink to='/meal-plan' icon={ <Calendar className='size-4' /> } label='Meal Plan' />
-            <NavLink to='/shopping-list' icon={ <ShoppingCart className='size-4' /> } label='Shooping' />
+            {navLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={ 
+                ({ isActive }) => 
+                  `group flex items-center gap-3 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 
+                  ${ isActive  ? 'bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900' }
+                  ` 
+              }>
+                {
+                  ({ isActive }) => (
+                    <>
+                      <link.icon
+                        size={18}
+                        strokeWidth={2.5}
+                        className={`transition-transform duration-200 ${ isActive ? '' : 'group-hover:scale-110' }`}
+                      />
+                      {link.text}
+                    </>
+                  )
+                }
+              </NavLink>
+          ))}
           </div>
 
           {/* User Menu */}
