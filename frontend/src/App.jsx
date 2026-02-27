@@ -32,7 +32,7 @@ function App() {
           <Route path='/recipes/:id' element={ <ProtectedRoutes><RecipeDetailsPage /></ProtectedRoutes> } /> 
           <Route path='/meal-plan' element={ <ProtectedRoutes><MealPlannerPage /></ProtectedRoutes> } /> 
           <Route path='/shopping-list' element={ <ProtectedRoutes><ShoppingListPage /></ProtectedRoutes> } /> 
-          <Route path='/settings' element={ <ProtectedRoutes><SettingsPage /></ProtectedRoutes> } /> 
+          <Route path='/setting' element={ <ProtectedRoutes><SettingsPage /></ProtectedRoutes> } /> 
 
           {/* Default redirect to dashboard */}
           <Route path='/' element={ <Navigate to='/dashboard' replace /> } />
