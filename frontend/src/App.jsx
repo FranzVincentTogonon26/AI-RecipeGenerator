@@ -29,7 +29,7 @@ function App() {
           <Route path='/pantry' element={ <ProtectedRoutes><PantryPage /></ProtectedRoutes> } />
           <Route path='/generate' element={ <ProtectedRoutes><RecipeGeneratorPage /></ProtectedRoutes> } />
           <Route path='/recipes' element={ <ProtectedRoutes><MyRecipesPage /></ProtectedRoutes> } /> 
-          <Route path='/recipe/:id' element={ <ProtectedRoutes><RecipeDetailsPage /></ProtectedRoutes> } /> 
+          <Route path='/recipes/:id' element={ <ProtectedRoutes><RecipeDetailsPage /></ProtectedRoutes> } /> 
           <Route path='/meal-plan' element={ <ProtectedRoutes><MealPlannerPage /></ProtectedRoutes> } /> 
           <Route path='/shopping-list' element={ <ProtectedRoutes><ShoppingListPage /></ProtectedRoutes> } /> 
           <Route path='/settings' element={ <ProtectedRoutes><SettingsPage /></ProtectedRoutes> } /> 
