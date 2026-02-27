@@ -8,6 +8,12 @@ import LoginPage from './components/Authentication/LoginPage'
 import RegisterPage from './components/Authentication/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
 import PantryPage from './pages/PantryPage'
+import RecipeGeneratorPage from './pages/RecipeGeneratorPage';
+import MyRecipesPage from './pages/MyRecipesPage';
+import RecipeDetailsPage from './pages/RecipeDetailsPage';
+import MealPlannerPage from './pages/MealPlannerPage';
+import ShoppingListPage from './pages/ShoppingListPage'; 
+import SettingsPage from './pages/SettingsPage'; 
 
 function App() {
   return (
@@ -21,6 +27,15 @@ function App() {
           {/* Protected Routes */}
           <Route path='/dashboard' element={ <ProtectedRoutes><DashboardPage /></ProtectedRoutes> } />
           <Route path='/pantry' element={ <ProtectedRoutes><PantryPage /></ProtectedRoutes> } />
+          <Route path='/generate' element={ <ProtectedRoutes><RecipeGeneratorPage /></ProtectedRoutes> } />
+          <Route path='/recipes' element={ <ProtectedRoutes><MyRecipesPage /></ProtectedRoutes> } /> 
+          <Route path='/recipe/:id' element={ <ProtectedRoutes><RecipeDetailsPage /></ProtectedRoutes> } /> 
+          <Route path='/meal-plan' element={ <ProtectedRoutes><MealPlannerPage /></ProtectedRoutes> } /> 
+          <Route path='/shopping-list' element={ <ProtectedRoutes><ShoppingListPage /></ProtectedRoutes> } /> 
+          <Route path='/settings' element={ <ProtectedRoutes><SettingsPage /></ProtectedRoutes> } /> 
+
+          {/* Default redirect to dashboard */}
+          <Route path='/' element={ <Navigate to='/dashboard' replace /> } />
   
         </Routes>
       </BrowserRouter>
