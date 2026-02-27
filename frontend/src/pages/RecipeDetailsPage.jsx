@@ -258,13 +258,30 @@ const RecipeDetailsPage = () => {
 
     loadRecipe();
     
-  }, [id, navigate])
+  }, [id, navigate]);
 
-  const handleDelete = () => {
-
+  if (!recipe) {
+      return null;
   }
 
-  const toggleIngredient = () => {
+  const handleDelete = () => {
+    if(!confirm('Are you sure you want to delete this recipe?')) return;
+
+    toast.success('Recipe deleted..');
+    navigate('/recipes');
+    
+  }
+
+  const toggleIngredient = (index) => {
+    const newChecked = new Set(checkedIngredients);
+
+    if(newChecked.has(index)){
+      newChecked.delete(index);
+    } else {
+      newChecked.add(index);
+    }
+
+    setCheckedIngredients(newChecked);
 
   }
 
