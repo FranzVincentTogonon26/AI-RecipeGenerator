@@ -21,6 +21,9 @@ function App() {
           {/* Protected Routes */}
           <Route path='/dashboard' element={ <ProtectedRoutes><DashboardPage /></ProtectedRoutes> } />
           <Route path='/pantry' element={ <ProtectedRoutes><PantryPage /></ProtectedRoutes> } />
+
+          {/* Default redirect to dashboard */}
+          <Route path='/' element={ <Navigate to='/dashboard' replace /> } />
   
         </Routes>
       </BrowserRouter>
