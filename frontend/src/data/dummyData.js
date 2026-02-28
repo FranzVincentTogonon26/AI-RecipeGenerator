@@ -1,3 +1,5 @@
+export const CATEGORIES = ['Vegetables', 'Fruits', 'Dairy', 'Meat', 'Grains', 'Spices', 'Other'];
+
 export const dummyUser = {
     id: 1,
     name: 'John Doe',
@@ -244,7 +246,7 @@ export const dummyPantryItems = [
         quantity: 6,
         unit: 'pieces',
         category: 'Vegetables',
-        expiry_date: '2024-02-20',
+        expiry_date: '2027-02-20',
         is_running_low: false,
         created_at: '2024-02-01T10:00:00Z'
     },
@@ -638,16 +640,16 @@ export const dummyGeneratedRecipe = {
 
 
 // Get expiring items (within 7 days)
-export const getExpiringItems = () => {
-    const today = new Date();
-    const sevenDaysFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+// export const getExpiringItems = () => {
+//     const today = new Date();
+//     const sevenDaysFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 
-    return dummyPantryItems.filter(item => {
-        if (!item.expiry_date) return false;
-        const expiryDate = new Date(item.expiry_date);
-        return expiryDate >= today && expiryDate <= sevenDaysFromNow;
-    });
-};
+//     return dummyPantryItems.filter(item => {
+//         if (!item.expiry_date) return false;
+//         const expiryDate = new Date(item.expiry_date);
+//         return expiryDate >= today && expiryDate <= sevenDaysFromNow;
+//     });
+// };
 
 // Get recent recipes (last 5)
 export const getRecentRecipes = (limit = 5) => {
