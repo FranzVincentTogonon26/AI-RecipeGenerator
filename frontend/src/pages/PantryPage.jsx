@@ -30,13 +30,9 @@ const PantryPage = () => {
 
   const getExpiringItems = () => {
     const today = new Date();
-    const sevenDaysFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-    const count = items.filter((item) => {
-      if (!item.expiry_date) return false;
-
-      const expiryDate = new Date(item.expiry_date);
-      return expiryDate >= today && expiryDate <= sevenDaysFromNow;
-    }).length;
+    const count = dummyPantryItems.filter(
+        (item) => item.expiry_date && new Date(item.expiry_date) < today
+    ).length;
     setExpiringItems(count);
   };
 
