@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router';
-import { ChefHat, Search } from 'lucide-react'
-import toast from 'react-hot-toast';
+import { ChefHat } from 'lucide-react'
 
 import Navbar from '../components/layout/Navbar'
 import RecipeCardpage from '../components/layout/MyRecipe/RecipeCardpage';

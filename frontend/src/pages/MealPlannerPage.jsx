@@ -4,7 +4,7 @@ import { Plus, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import Navbar from '../components/layout/Navbar'
-import AddMealModal from '../components/layout/AddMealModal';
+import AddMealModal from '../components/layout/MealPlan/AddMealModal';
 
 const dummyMealPlans = [
     {
