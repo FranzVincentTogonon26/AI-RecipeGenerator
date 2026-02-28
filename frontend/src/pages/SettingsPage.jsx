@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Save, User, Lock, Trash2 } from 'lucide-react'
 import { useNavigate } from 'react-router';
-
-import Navbar from '../components/layout/Navbar'
-import { useAuth } from '../context/useAuth';
 import toast from 'react-hot-toast';
+
+import { useAuth } from '../context/useAuth';
+import Navbar from '../components/layout/Navbar'
 
 const dummyUser = {
     id: 1,

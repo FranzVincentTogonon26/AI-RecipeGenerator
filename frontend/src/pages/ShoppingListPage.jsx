@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Plus, ShoppingCart, Trash2 } from 'lucide-react';
 
 import Navbar from '../components/layout/Navbar'
-import ShoppingListItem from '../components/layout/ShoppingListItem';
-import AddItemModal from '../components/layout/AddItemModal';
+import ShoppingListItem from '../components/layout/ShoppingList/ShoppingListItem';
+import AddItemModal from '../components/layout/ShoppingList/AddItemModal';
+
 import toast from 'react-hot-toast';
 
 const dummyShoppingListItems = [
