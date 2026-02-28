@@ -28,7 +28,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to='/dashboard' className='flex items-center gap-2 text-lg font-semibold text-gray-900'>
             <ChefHat className='size-7 text-emerald-500' />
-            <span>Ai Recipe Generator</span>
+            <span>AI Recipe Generator</span>
           </Link>
 
           {/* Navigation Links */}

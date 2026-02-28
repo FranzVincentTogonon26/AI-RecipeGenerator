@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { Calendar, X } from 'lucide-react';
-import ModalDelete from '../../ModalDelete';
 import toast from 'react-hot-toast';
+
+import ModalDelete from '../ModalDelete';
 
 const ItemsGrid = ({
     filteredItems
