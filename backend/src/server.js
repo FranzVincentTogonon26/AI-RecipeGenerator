@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 
-import { ENV } from './libs/env.js'
-import connectDB from './libs/db.js'
+import { ENV } from './config/env.js'
+import connectDB from './config/db.js'
 import rateLimiter from './middleware/rateLimiter.js'
 
 import authRoutes from './routes/authRoutes.js'
