@@ -2,11 +2,10 @@ import express from 'express'
 import cors from 'cors'
 
 import { ENV } from './config/env.js'
-import connectDB from './config/db.js'
 import rateLimiter from './middleware/rateLimiter.js'
 
 import authRoutes from './routes/authRoutes.js'
-import dashboardRoutes from './routes/dashboardRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 
 const app = express();
 
@@ -20,14 +19,12 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(rateLimiter)
+// app.use(rateLimiter)
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/users', userRoutes);
 
-connectDB().then( () => {
-    app.listen( ENV.PORT, () => {
-        console.log(`Server running on port ${ENV.PORT}`)
-    } )
-})
+app.listen( ENV.PORT, () => {
+    console.log(`Server running on port ${ENV.PORT}`)
+} )

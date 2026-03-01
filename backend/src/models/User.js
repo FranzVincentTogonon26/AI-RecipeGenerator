@@ -26,7 +26,7 @@ class User {
     // Find user by ID
     static async findById( id ){
         const result = await db.query(
-            'SELECT id, email, name, created_at, updated_at FROM users WHERE sid = $1', [id]
+            'SELECT id, email, name, created_at, updated_at FROM users WHERE id = $1', [id]
         );
         return result.rows[0];
     }
@@ -49,7 +49,7 @@ class User {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         await db.query(
-            'UPDATE users SET password_hash = $1 WHERE id - $2', [hashedPassword, id]
+            'UPDATE users SET password_hash = $1 WHERE id = $2', [hashedPassword, id]
         )
     }
 
