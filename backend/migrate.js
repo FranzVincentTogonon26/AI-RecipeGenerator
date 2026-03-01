@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from "path";
 import { fileURLToPath } from "url";
 import pkg from 'pg'
-import { ENV } from "./src/config/env";
+import { ENV } from "./src/config/env.js";
 
 const { Pool } = pkg;
 const __filename = fileURLToPath(import.meta.url);
@@ -20,7 +20,7 @@ async function runMigration() {
         console.log('Running database migration..');
 
         // Read the schema file
-        const schemaPath = path.join(__dirname, 'config', 'schema.sql');
+        const schemaPath = path.join(__dirname, 'src/config', 'schema.sql');
         const schemaSql = fs.readFileSync(schemaPath, 'utf8');
 
         await client.query(schemaSql);
