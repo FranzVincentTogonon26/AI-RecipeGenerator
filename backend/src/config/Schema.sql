@@ -1,5 +1,7 @@
-CREATE EXTENSION IN NOT EXIST "uuid-ossp"
+-- Enable UUID extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- USERS
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -7,8 +9,9 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
 
+-- USER PREFERENCES
 CREATE TABLE IF NOT EXISTS user_preferences (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
@@ -20,8 +23,9 @@ CREATE TABLE IF NOT EXISTS user_preferences (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user_id)
-)
+);
 
+-- PANTRY ITEMS
 CREATE TABLE IF NOT EXISTS pantry_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
@@ -34,8 +38,9 @@ CREATE TABLE IF NOT EXISTS pantry_items (
     measurement_unit VARCHAR(20) DEFAULT 'metric',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
 
+-- RECIPES
 CREATE TABLE IF NOT EXISTS recipes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
@@ -52,8 +57,9 @@ CREATE TABLE IF NOT EXISTS recipes (
     image_url TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
 
+-- RECIPE INGREDIENTS
 CREATE TABLE IF NOT EXISTS recipe_ingredients (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     recipe_id UUID REFERENCES recipes(id) ON DELETE CASCADE,
@@ -61,8 +67,9 @@ CREATE TABLE IF NOT EXISTS recipe_ingredients (
     quantity DECIMAL(10, 2) NOT NULL,
     unit VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
 
+-- RECIPE NUTRITION
 CREATE TABLE IF NOT EXISTS recipe_nutrition (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     recipe_id UUID REFERENCES recipes(id) ON DELETE CASCADE,
@@ -73,8 +80,9 @@ CREATE TABLE IF NOT EXISTS recipe_nutrition (
     fiber DECIMAL(10, 2),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(recipe_id)
-)
+);
 
+-- MEAL PLANS
 CREATE TABLE IF NOT EXISTS meal_plans (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
@@ -84,8 +92,9 @@ CREATE TABLE IF NOT EXISTS meal_plans (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user_id, meal_date, meal_type)
-)
+);
 
+-- SHOPPING LIST
 CREATE TABLE IF NOT EXISTS shopping_list_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
@@ -97,8 +106,9 @@ CREATE TABLE IF NOT EXISTS shopping_list_items (
     from_meal_plan BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
 
+-- INDEXES
 CREATE INDEX IF NOT EXISTS idx_pantry_user_id ON pantry_items(user_id);
 CREATE INDEX IF NOT EXISTS idx_pantry_category ON pantry_items(category);
 CREATE INDEX IF NOT EXISTS idx_pantry_expiry ON pantry_items(expiry_date);
@@ -110,30 +120,42 @@ CREATE INDEX IF NOT EXISTS idx_meal_plans_user_date ON meal_plans(user_id, meal_
 
 CREATE INDEX IF NOT EXISTS idx_shopping_list_user ON shopping_list_items(user_id);
 
--- Function to update updated_at teimestamp
-CREATE OR REPLACE FUNCTION update_updated_at_column();
+-- FUNCTION TO AUTO UPDATE updated_at
+CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated_at = CURRENT_TIMESTAMP;
     RETURN NEW;
 END;
-$$ language 'plpgsql';
+$$ LANGUAGE plpgsql;
 
--- Create triggers for updated_at
-CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
-    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+-- TRIGGERS
+CREATE TRIGGER update_users_updated_at
+BEFORE UPDATE ON users
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_user_preferences_updated_at BEFORE UPDATE ON user_preferences
-    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_user_preferences_updated_at
+BEFORE UPDATE ON user_preferences
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_pantry_items_updated_at BEFORE UPDATE ON pantry_items
-    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_pantry_items_updated_at
+BEFORE UPDATE ON pantry_items
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_recipes_updated_at BEFORE UPDATE ON recipes
-    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_recipes_updated_at
+BEFORE UPDATE ON recipes
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_meal_plans_updated_at BEFORE UPDATE ON meal_plans
-    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_meal_plans_updated_at
+BEFORE UPDATE ON meal_plans
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_shopping_list_items_updated_at BEFORE UPDATE ON shopping_list_items
-    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_shopping_list_items_updated_at
+BEFORE UPDATE ON shopping_list_items
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
