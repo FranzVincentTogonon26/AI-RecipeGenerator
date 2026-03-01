@@ -39,8 +39,8 @@ const AddItemModal = ({
     };
     
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-xl max-w-md w-full p-6">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-xl max-w-lg w-full p-10">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900">Add Item</h2>
                 <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
@@ -78,7 +78,7 @@ const AddItemModal = ({
                         <select
                             value={formData.unit}
                             onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                            className="select h-11 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
                         >
                             <option value="pieces">Pieces</option>
                             <option value="kg">Kilograms</option>
@@ -97,7 +97,7 @@ const AddItemModal = ({
                     <select
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                        className="select h-11 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
                     >
                         {CATEGORIES.map(cat => (
                             <option key={cat} value={cat}>{cat}</option>
@@ -105,7 +105,7 @@ const AddItemModal = ({
                     </select>
                 </div>
 
-                <div className="flex gap-3 pt-4">
+                <div className="flex gap-3 pt-4 mb-15">
                     <button
                         type="button"
                         onClick={onClose}

@@ -33,7 +33,7 @@ const ShoppingListItem = ({
         <div className="space-y-6">
             {Object.entries(groupedItems).map(([category, categoryItems]) => (
                 <div key={category} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                    <div className="bg-gray-50 px-6 py-3 border-b border-gray-200">
+                    <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
                         <h2 className="font-semibold text-gray-900">{category}</h2>
                     </div>
                     <div className="divide-y divide-gray-100">

@@ -55,8 +55,8 @@ const CalendarGrid = ({
     <>
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         {/* Header Row */}
-        <div className="grid grid-cols-8 border-b border-gray-200 bg-gray-50">
-            <div className="p-4 font-semibold text-gray-700 border-r border-gray-200">
+        <div className="grid grid-cols-8 border-b border-gray-200 bg-gray-100">
+            <div className="p-4 font-semibold text-gray-800 border-r border-gray-200">
                 Meal
             </div>
             {DAYS_OF_WEEK.map((day, index) => (
@@ -71,7 +71,7 @@ const CalendarGrid = ({
         {/* Meal Rows */}
         {MEAL_TYPES.map(mealType => (
         <div key={mealType} className="grid grid-cols-8 border-b border-gray-200 last:border-b-0">
-            <div className="p-4 font-medium text-gray-700 capitalize border-r border-gray-200 bg-gray-50">
+            <div className="p-4 font-medium text-gray-800 capitalize border-r border-gray-200 bg-gray-100 items-center flex justify-start">
                 {mealType}
             </div>
             {DAYS_OF_WEEK.map((_, dayIndex) => {
