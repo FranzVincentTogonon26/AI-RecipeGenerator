@@ -74,15 +74,15 @@ const IngredientsSection = ({ recipe, servings, setServings }) => {
                             key={index}
                             className="flex items-start gap-3 cursor-pointer group"
                         >
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={() => toggleIngredient(index)}
-                                className="mt-1 w-4 h-4 text-emerald-500 border-gray-300 rounded focus:ring-emerald-500"
-                            />
-                            <span className={`flex-1 ${isChecked ? 'line-through text-gray-400' : 'text-gray-700'}`}>
+                            <label className={`label flex-1 ${isChecked ? 'line-through text-gray-400' : 'text-gray-700'}`}>
+                                <input
+                                    type="checkbox"
+                                    checked={isChecked}
+                                    onChange={() => toggleIngredient(index)}
+                                    className="checkbox checkbox-sm text-emerald-500 border-gray-300 rounded focus:ring-emerald-500"
+                                />
                                 <span className="font-medium">{adjustedQty}</span> {ingredient.unit} {ingredient.name}
-                            </span>
+                            </label>
                         </label>
                     );
                 })}

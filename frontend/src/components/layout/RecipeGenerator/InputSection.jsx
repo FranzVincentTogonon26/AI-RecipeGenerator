@@ -58,14 +58,14 @@ const InputSection = ({generate}) => {
 
         {/* Use Pantry Toggle */}
         <div className="flex items-center gap-3 mb-4 p-3 bg-emerald-50 rounded-lg">
-            <input
-                type="checkbox"
-                id="use-pantry"
-                checked={usePantry}
-                onChange={(e) => setUsePantry(e.target.checked)}
-                className="w-4 h-4 text-emerald-500 border-gray-300 rounded focus:ring-emerald-500"
-            />
-            <label htmlFor="use-pantry" className="text-sm font-medium text-emerald-900">
+            <label htmlFor="use-pantry" className="text-sm font-medium text-emerald-900 label">
+                <input
+                    type="checkbox"
+                    id="use-pantry"
+                    checked={usePantry}
+                    onChange={(e) => setUsePantry(e.target.checked)}
+                    className="checkbox checkbox-sm text-emerald-500 border-gray-300 rounded focus:ring-emerald-500"
+                />
                 Use ingredients from my pantry
             </label>
         </div>

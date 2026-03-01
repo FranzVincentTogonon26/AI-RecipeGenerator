@@ -44,7 +44,7 @@ const AddMealModal = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-xl max-w-md w-full p-6">
+        <div className="bg-white rounded-xl max-w-lg w-full p-10">
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h2 className="text-xl font-bold text-gray-900">Add Meal</h2>
@@ -70,7 +70,7 @@ const AddMealModal = ({
                 </div>
 
                 {/* Recipe List */}
-                <div className="max-h-64 overflow-y-auto space-y-2 custom-scrollbar">
+                <div className="max-h-100 overflow-y-auto space-y-2 custom-scrollbar">
                     {filteredRecipes.length > 0 ? (
                         filteredRecipes.map(recipe => (
                             <label
@@ -86,7 +86,7 @@ const AddMealModal = ({
                                     value={recipe.id}
                                     checked={selectedRecipe === recipe.id}
                                     onChange={(e) => setSelectedRecipe(Number(e.target.value))}
-                                    className="w-4 h-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
+                                    className="radio radio-primary radio-sm text-emerald-500 border-gray-300 focus:ring-emerald-500"
                                 />
                                 <div className="flex-1">
                                     <p className="font-medium text-gray-900">{recipe.name}</p>
@@ -104,7 +104,7 @@ const AddMealModal = ({
                     )}
                 </div>
 
-                <div className="flex gap-3 pt-4">
+                <div className="flex gap-3 pt-4 mb-12">
                     <button
                         type="button"
                         onClick={onClose}
