@@ -33,7 +33,7 @@ class PantryItem {
 
         if(filters.search){
             paramsCount++;
-            query += ` AND name LIKE = $${paramsCount}`;
+            query += ` AND name ILIKE = $${paramsCount}`;
             params.push(`%${filters.search}%`)
         }
 
