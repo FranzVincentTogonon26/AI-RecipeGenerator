@@ -5,10 +5,15 @@ export const API_PATHS = {
         LOGIN: '/api/auth/login',
         REGISTER: '/api/auth/register'
     },
-    DASHBOARD: {
-        GET_DASHBOARD: '/api/dashboard'
+    RECIPES: {
+        GET_RECIPE_STATS: '/api/recipes/stats',
+        GET_RECIPE_RECENT: '/api/recipes/recent'
     },
     PANTRY: {
-        GET_PANTRY: '/api/pantry'
+        GET_PANTRY_STATS: '/api/pantry/stats'
+    },
+    MEAL_PLAN: {
+        GET_MEAL_PLAN_STATS: '/api/meal-plans/stats',
+        GET_MEAL_PLAN_UPCOMING: '/api/meal-plans/upcoming'
     }
 }

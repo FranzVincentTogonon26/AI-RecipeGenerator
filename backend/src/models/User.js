@@ -4,13 +4,13 @@ import db from '../config/db.js'
 class User {
 
     // Create User
-    static async create({ email, password, name }){
+    static async create({ email, password, username }){
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const result = await db.query(
             `INSERT INTO users ( email, password_hash, name ) 
              VALUES ( $1, $2, $3 )
-             RETURNING id, email, name, created_at`, [ email, hashedPassword, name]
+             RETURNING id, email, name, created_at`, [ email, hashedPassword, username]
         );
         return result.rows[0];
     }

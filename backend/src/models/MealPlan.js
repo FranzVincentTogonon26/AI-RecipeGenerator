@@ -59,13 +59,13 @@ class MealPlan {
         const result = await db.query(
             `SELECT mp.*, r.name as recipe_name, r.image_url
              FROM meal_plans mp JOIN recipes r ON mp.recipe_id = r.id
-             WHERE mp.meal_date >= CURRENT_DATE
-             ORDER BY mp.meal_date ASC
-                CASE mp.meal_type
+             WHERE mp.user_id = $1 AND mp.meal_date >= CURRENT_DATE
+             ORDER BY mp.meal_date ASC,
+                ( CASE mp.meal_type
                     WHEN 'breakfast' THEN 1
                     WHEN 'lunch' THEN 2
                     WHEN 'dinner' THEN 3
-                END
+                END )
              LIMIT $2`, [userId, limit]
         );
         return result.rows;
@@ -80,7 +80,7 @@ class MealPlan {
     // Get meal plan stats
     static async getStats( userId ){
         const result = await db.query(
-            `SELECT COUNT(*) AS total_planned_meals
+            `SELECT COUNT(*) AS total_planned_meals,
                     COUNT(*) FILTER ( WHERE meal_date >= CURRENT_DATE AND meal_date < CURRENT_DATE + INTERVAL '7 days') as this_week_count
              FROM meal_plans WHERE user_id = $1`, [userId]
         );

@@ -23,7 +23,7 @@ const Register = () => {
       return;
     }
 
-    setError(null);
+    setError('');
     setLoading(true);
 
     try {
@@ -105,6 +105,7 @@ const Register = () => {
             <button
               onClick={handleSubmit}
               disabled={loading}
+              type='button'
               className='group relative w-full h-12 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 active:scale-[0.98] text-white text-sm font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 shadow-lg shadow-emeral-500/25 overflow-hidden'
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
@@ -124,7 +125,6 @@ const Register = () => {
               </span>
               <div className='absolute inset-0 bg-linear-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700'  />
             </button>
-
           </div>
 
           {/* Footer */}

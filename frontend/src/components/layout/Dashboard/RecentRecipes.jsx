@@ -1,17 +1,7 @@
-import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router';
 import { ChefHat, Clock } from 'lucide-react';
 
-import { getRecentRecipes } from '../../../data/dummyData';
-
-const RecentRecipes = () => {
-
-  const [recentRecipes, setRecentRecipes] = useState([]);
-
-  useEffect(() => {
-    // load Data
-    setRecentRecipes(getRecentRecipes(5));
-  }, [])
+const RecentRecipes = ({recentRecipes}) => {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6">

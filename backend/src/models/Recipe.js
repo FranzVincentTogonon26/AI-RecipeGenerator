@@ -223,7 +223,7 @@ class Recipe {
 
     // Get recipe stats
     static async getStats( userId ){
-        const result = db.query(
+        const result = await db.query(
             `SELECT COUNT(*) AS total_recipes,
                     COUNT(DISTINCT cuisine_type) AS cuisine_types_count,
                     AVG(cook_time) AS avg_cook_time

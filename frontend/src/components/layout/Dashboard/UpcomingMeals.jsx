@@ -1,18 +1,7 @@
-import React, { useEffect, useState } from 'react'
 import { Calendar } from 'lucide-react';
 import { Link } from 'react-router';
 
-import { getUpcomingMeals } from '../../../data/dummyData';
-
-const UpcomingMeals = () => {
-
-   const [upcomingMeals, setUpcomingMeals] = useState([]);
-
-   useEffect(() => {
-    // load Data
-    setUpcomingMeals(getUpcomingMeals(5));
-    
-   }, [])
+const UpcomingMeals = ({upcomingMeals}) => {
 
    return (
     <div className="bg-white rounded-xl border border-gray-200 p-6">

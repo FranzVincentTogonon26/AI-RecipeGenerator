@@ -16,10 +16,9 @@ const generateToken = ( user ) => {
 // Register new User
 export const register = async ( req, res, next ) => {
     try {
-        const { email, password, name } = req.body;
-
+        const { email, password, username } = req.body;
         // Validation
-        if(!email || !password || !name){
+        if(!email || !password || !username){
             return res.status(401).json({
                 success: false,
                 message: 'Please provide email, password and name..'
@@ -35,7 +34,7 @@ export const register = async ( req, res, next ) => {
             })
         }
 
-        const user = await User.create({ email, password, name });
+        const user = await User.create({ email, password, username });
 
         await UserPreference.upsert(user.id, {
             dietary_restrictions: [],
@@ -45,19 +44,19 @@ export const register = async ( req, res, next ) => {
             measurement_unit:  'metric',
         });
 
-        const token = generateToken(user);
+        // const token = generateToken(user);
 
         res.status(201).json({
             success: true,
             message: 'user registered successfully..',
-            data: {
-                user: {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name
-                },
-                token
-            }
+            // data: {
+            //     user: {
+            //         id: user.id,
+            //         email: user.email,
+            //         name: user.name
+            //     },
+            //     token
+            // }
         })
 
     } catch (error) {
@@ -97,14 +96,14 @@ export const login = async ( req, res, next ) => {
         res.json({
             success: true,
             message: 'Login Successfully..',
-            data: {
+            data:{
                 user: {
                     id: user.id,
                     email: user.email,
                     name: user.name
                 },
                 token
-            }
+            } 
         })
 
     } catch (error) {

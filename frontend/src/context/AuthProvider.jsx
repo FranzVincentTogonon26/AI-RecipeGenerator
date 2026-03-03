@@ -10,7 +10,7 @@ export const AuthProvider = ({children}) => {
     const checkAuthStatus = () => {
         try {
             const token = localStorage.getItem('token');
-            const user = localStorage.getItem*('user');
+            const user = localStorage.getItem('user');
 
             if(token && user){
                 setUser(JSON.parse(user));
@@ -37,7 +37,7 @@ export const AuthProvider = ({children}) => {
 
   const login = (token, user) => {
     localStorage.setItem('token', token);
-    localStorage.setItem('user', user);
+    localStorage.setItem('user', JSON.stringify(user));
     setUser(user);
     setIsAuthenticated(true);
   }
