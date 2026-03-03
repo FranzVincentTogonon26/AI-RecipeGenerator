@@ -14,6 +14,10 @@ pool.on('connect', () => {
 
 pool.on('error', (err) => {
   console.error('Unexpected database error:', err);
+  process.exit(-1);
 });
 
-export default pool;
+export default {
+  pool,
+  query: (text, params) => pool.query(text, params),
+};
