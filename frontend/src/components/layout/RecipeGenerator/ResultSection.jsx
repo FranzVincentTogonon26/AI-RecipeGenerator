@@ -2,15 +2,39 @@ import { ChefHat, Clock, Users } from 'lucide-react';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 
+import generateRecipeService from '../../../services/generateRecipeService';
+
 const ResultSection = ({ generatedRecipe, setGeneratedRecipe }) => {
 
   const [saving, setSaving] = useState(false);
 
-  const handleSaveRecipe = () => {
+  const handleSaveRecipe = async () => {
     if (!generatedRecipe) return;
-    // UI-only save (no API call)
-    toast.success('Recipe saved to your collection!');
-    setSaving(false)
+    
+    try {
+        setSaving(true);
+        await generateRecipeService.saveRecipe({
+            recipeId: generatedRecipe.recipeId,
+            name: generatedRecipe.name,
+            description: generatedRecipe.description,
+            cuisine_type: generatedRecipe.cuisineType,
+            difficulty: generatedRecipe.difficulty,
+            prep_time: generatedRecipe.prepTime,
+            cook_time: generatedRecipe.cookTime,
+            servings: generatedRecipe.servings,
+            instructions: generatedRecipe.instructions,
+            dietary_tags: generatedRecipe.dietaryTags || [],
+            ingredients: generatedRecipe.ingredients,
+            nutrition: generatedRecipe.nutrition
+        })
+        toast.success('Recipe saved to your collection!');
+
+    } catch (error) {
+        toast.error('Failed to save recipe..', error)
+    } finally {
+        setSaving(false)
+    }
+    
   };
 
   return (

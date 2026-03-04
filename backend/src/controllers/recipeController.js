@@ -75,6 +75,18 @@ export const getPantrySuggestions = async (req, res, next) => {
 // Save recipe
 export const saveRecipe = async (req, res, next) => {
     try {
+
+        const { recipeId } = req.body;
+
+        const recipeExist = await Recipe.validateRecipe(req.user.id, recipeId);
+
+        if(recipeExist){
+            res.status(409).json({
+                success: false,
+                message: 'Recipe already saved..'
+            })
+        }
+
         const recipe = await Recipe.create(req.user.id, req.body);
 
         res.status(201).json({
