@@ -71,7 +71,7 @@ const ItemsGrid = ({
                             <div className="flex items-center justify-start text-sm">
                                 <span className="text-gray-600">Quantity:</span>
                                 <span className="font-medium text-gray-900 ml-2">
-                                    {Number(item?.quantity)} {item?.unit}
+                                    {Number(item?.quantity)} {item?.unit?.charAt(0).toUpperCase() + item?.unit?.slice(1)}
                                 </span>
                             </div>
             

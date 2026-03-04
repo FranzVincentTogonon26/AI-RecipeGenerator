@@ -140,7 +140,7 @@ export const getRecipes = async (req, res, next) => {
 // Get recent recipes
 export const getRecentRecipes = async (req, res, next) => {
     try {
-        const limit = parseInt(req.query.limit) || 5;
+        const limit = parseInt(req.query.limit) || 10;
         const recipes = await Recipe.getRecent(req.user.id, limit);
 
         res.json({

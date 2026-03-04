@@ -83,8 +83,8 @@ const AddItemModal = ({
                         >
                             <option value="pieces">Pieces</option>
                             <option value="kg">Kilograms</option>
-                            <option value="g">Grams</option>
-                            <option value="l">Liters</option>
+                            <option value="gram">Grams</option>
+                            <option value="liter">Liters</option>
                             <option value="ml">Milliliters</option>
                             <option value="cups">Cups</option>
                             <option value="tbsp">Tablespoons</option>
