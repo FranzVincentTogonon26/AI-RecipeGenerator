@@ -14,7 +14,6 @@ const InputSection = ({generate}) => {
   const [cookingTime, setCookingTime] = useState('medium');
   const [usePantry, setUsePantry] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [generatedRecipe, setGeneratedRecipe] = useState(null);
   const [generating, setGenerating] = useState(false);
 
   // Load user references
@@ -31,10 +30,6 @@ const InputSection = ({generate}) => {
     }
     fectUserPreperences();
   }, [])
-
-  useEffect(() => {
-    generate(generatedRecipe)
-  }, [generate, generatedRecipe])
 
   const addIngredient = () => {
     if(inputValue.trim() && !ingredients.includes(inputValue.trim())){
@@ -59,7 +54,7 @@ const InputSection = ({generate}) => {
             servings,
             cookingTime
         })
-        setGeneratedRecipe(response);
+        generate(response);
         toast.success('Recipe generated successfully..')
     } catch (error) {
         toast.error(error.response?.data?.message || 'Failed to generate recipe..')

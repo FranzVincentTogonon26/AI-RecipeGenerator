@@ -74,16 +74,15 @@ const PantryPage = () => {
     setFilteredItems(filtered);
   };
 
-  if(loading){
-    return (
-      <Spinner />
-    )
-  }
+  const renderContent = () => {
+      if(loading){
+        return (
+          <Spinner />
+        )
+      }
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      return (
+        <>
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div>
@@ -98,8 +97,7 @@ const PantryPage = () => {
                     Add Item
                 </button>
             </div>
-
-          {/* Expiring Soon Alert */}
+            {/* Expiring Soon Alert */}
             {expiringItems.length > 0 && (
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
                     <div className="flex items-start gap-3">
@@ -113,7 +111,6 @@ const PantryPage = () => {
                     </div>
                 </div>
             )}
-
             {/* Search and Filter */}
             <SearchAndFilter
                 category={category}
@@ -122,13 +119,21 @@ const PantryPage = () => {
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
             />
-
             {/* Items Grid */}
             <ItemsGrid 
                 filteredItems={filteredItems}
                 onDeleteItem={handleDeleteItem}
             />
-              
+        </>
+      )
+  }
+
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {renderContent()}  
         </div>
 
         {/* Add Item Modal */}

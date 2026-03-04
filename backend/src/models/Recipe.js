@@ -9,6 +9,7 @@ class Recipe {
             await client.query('BEGIN');
 
             const {
+                recipeId,
                 name,
                 description,
                 cuisine_type,
@@ -26,9 +27,9 @@ class Recipe {
 
             // Insert recipe
             const recipeResult = await client.query(
-                `INSERT INTO recipes (user_id, name, description, cuisine_type, difficulty, prep_time, cook_time, servings, instructions, dietary_tags, user_notes, image_url)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING * `, 
-                   [userId, name, description, cuisine_type, difficulty, prep_time, cook_time, servings, JSON.stringify(instructions), dietary_tags, user_notes, image_url]
+                `INSERT INTO recipes (user_id, name, description, cuisine_type, difficulty, prep_time, cook_time, servings, instructions, dietary_tags, user_notes, image_url, id)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING * `, 
+                   [userId, name, description, cuisine_type, difficulty, prep_time, cook_time, servings, JSON.stringify(instructions), dietary_tags, user_notes, image_url, recipeId]
             );
 
             const recipe = recipeResult.rows[0];
@@ -67,6 +68,14 @@ class Recipe {
         } finally {
             client.release();
         }
+    }
+
+    // Validate Recipe by Id
+    static async validateRecipe( userId, id ){
+        const result = await db.query(
+            'SELECT * FROM recipes WHERE user_id = $1 AND id = $2', [userId, id]
+        );
+        return result.rows[0];
     }
 
     // Get recipe by id with inf]gridients ana nutrition

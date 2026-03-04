@@ -39,6 +39,7 @@ export const generateRecipe = async ({
     Please provide a complete recipe in the following JSON format ( return ONLY valid JSON, no markdown):
     
     {
+        "recipeId": "${crypto.randomUUID()}",
         "name": "Recipe name",
         "description": "Brief description pf the dish",
         "cuisineType": "${cuisineType}",

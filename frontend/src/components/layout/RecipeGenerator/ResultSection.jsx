@@ -14,9 +14,10 @@ const ResultSection = ({ generatedRecipe, setGeneratedRecipe }) => {
     try {
         setSaving(true);
         await generateRecipeService.saveRecipe({
+            recipeId: generatedRecipe.recipeId,
             name: generatedRecipe.name,
             description: generatedRecipe.description,
-            cuisine_type: generatedRecipe.cuisine_type,
+            cuisine_type: generatedRecipe.cuisineType,
             difficulty: generatedRecipe.difficulty,
             prep_time: generatedRecipe.prep_time,
             cook_time: generatedRecipe.cook_time,
@@ -29,7 +30,7 @@ const ResultSection = ({ generatedRecipe, setGeneratedRecipe }) => {
         toast.success('Recipe saved to your collection!');
 
     } catch (error) {
-        toast.error('Failed to dace recipe..', error)
+        toast.error('Failed to save recipe..', error)
     } finally {
         setSaving(false)
     }
