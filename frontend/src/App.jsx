@@ -14,6 +14,7 @@ import RecipeDetailsPage from './pages/RecipeDetailsPage';
 import MealPlannerPage from './pages/MealPlannerPage';
 import ShoppingListPage from './pages/ShoppingListPage'; 
 import SettingsPage from './pages/SettingsPage'; 
+import PageNotFound from './components/layout/PageNotFound';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
 
           {/* Default redirect to dashboard */}
           <Route path='/' element={ <Navigate to='/dashboard' replace /> } />
+          <Route path='*' element={ <PageNotFound /> } />
   
         </Routes>
       </BrowserRouter>

@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { Link } from 'react-router'
 
 import ModalDelete from '../ModalDelete';
+import myRecipeService from '../../../services/myRecipeService';
 
 const RecipeCardpage = ({
     recipeData, onDelete
@@ -24,11 +25,16 @@ const RecipeCardpage = ({
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
-    onDelete(deleteId); 
-    toast.success('Recipe deleted');
-    setIsDeleteModalOpen(false);
-    setDeleteId(null);
+  const handleConfirmDelete = async () => {
+    try {
+        await myRecipeService.deleteRecipe(deleteId)
+        onDelete(deleteId); 
+        toast.success('Recipe deleted');
+        setIsDeleteModalOpen(false);
+        setDeleteId(null);
+    } catch (error) {
+        toast.error('Failed to delete item.', error);
+    }
   };
     
   return (

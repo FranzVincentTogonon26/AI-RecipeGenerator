@@ -9,7 +9,9 @@ export const API_PATHS = {
         GET_RECIPE_STATS: '/api/recipes/stats',
         GET_RECIPE_RECENT: '/api/recipes/recent',
         GENERATE_RECIPE: '/api/recipes/generate',
-        SAVE_RECIPE: '/api/recipes'
+        SAVE_RECIPE: '/api/recipes',
+        GET_RECIPES: '/api/recipes',
+        DELETE_RECIPE: (id) => `/api/recipes/${id}`
     },
     PANTRY: {
         GET_PANTRY: '/api/pantry',
