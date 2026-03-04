@@ -38,9 +38,21 @@ const ItemsGrid = ({
     {filteredItems.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredItems.map((item, index) => {
-                const isExpired = item?.expiry_date && new Date(item?.expiry_date) < new Date();
+
+                const today = new Date();
+                today.setHours(0,0,0,0); // start of today
+
+                const sevenDaysFromNow = new Date();
+                sevenDaysFromNow.setDate(today.getDate() + 7);
+                sevenDaysFromNow.setHours(23,59,59,999); // end of 7th day
+
+                const expiryDate = item?.expiry_date ? new Date(item.expiry_date) : null;
+
+                const isExpired = expiryDate && expiryDate < today;
+                const isExpiring = expiryDate && expiryDate >= today && expiryDate <= sevenDaysFromNow;
+
                 return (
-                    <div key={index} className={`rounded-lg border p-4 hover:shadow-md transition-shadow ${isExpired ? 'border-red-500 bg-red-100/50 ' : 'border-gray-200 bg-white '
+                    <div key={index} className={`rounded-lg border p-4 hover:shadow-md transition-shadow ${ isExpired ? 'border-red-200 bg-linear-to-r from-red-100 to-red-200' : isExpiring ? 'border-amber-200 bg-amber-50 ' : 'border-gray-200 bg-white '
                         }`}>
                         <div className="flex items-start justify-between mb-3">
                             <div className="flex-1">
@@ -66,7 +78,7 @@ const ItemsGrid = ({
                             {item?.expiry_date && (
                                 <div className="flex items-center gap-2 text-sm">
                                     <Calendar className="w-4 h-4 text-gray-400" />
-                                    <span className={`${isExpired ? 'text-red-600 font-medium' : isExpired ? 'text-amber-600 font-medium' : 'text-gray-600'}`}>
+                                    <span className={`${isExpired ? 'text-red-600 font-medium' : isExpiring ? 'text-amber-600 font-medium' : 'text-gray-600'}`}>
                                         {isExpired ? 'Expired' : 'Expires'}: {format(new Date(item?.expiry_date), 'MMM dd, yyyy')}
                                     </span>
                                 </div>

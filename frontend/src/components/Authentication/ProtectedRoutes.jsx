@@ -1,16 +1,19 @@
-import { Navigate } from 'react-router';
-import { useAuth } from '../../context/useAuth'
+import { Navigate } from "react-router";
+import { useAuth } from "../../context/useAuth";
 
-const ProtectedRoutes = ({children}) => {
+const ProtectedRoutes = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
 
-  const { isAuthenticated } = useAuth();
-
-  if(!isAuthenticated){
-    return <Navigate to='/login' replace />
+  // Wait for auth check to finish
+  if (loading) {
+    return null; // or a loading spinner
   }
-  
-  return children;
-  
-}
 
-export default ProtectedRoutes
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
+
+export default ProtectedRoutes;
