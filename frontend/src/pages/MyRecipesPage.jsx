@@ -7,9 +7,9 @@ import Navbar from '../components/layout/Navbar'
 import RecipeCardpage from '../components/layout/MyRecipe/RecipeCardpage';
 import SearchFilter from '../components/layout/MyRecipe/SearchFilter';
 import Spinner from '../components/layout/Spinner';
+import myRecipeService from '../services/myRecipeService';
 
 import { CUISINES, difficulties } from '../data/dummyData';
-import myRecipeService from '../services/myRecipeService';
 
 const MyRecipesPage = () => {
 
