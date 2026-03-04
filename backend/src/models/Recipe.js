@@ -155,6 +155,8 @@ class Recipe {
         paramCount++;
         query += ` LIMIT $${paramCount}`;
         params.push(limit);
+
+        paramCount++;
         query += ` OFFSET $${paramCount}`;
         params.push(offset);
 
