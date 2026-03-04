@@ -81,7 +81,7 @@ export const saveRecipe = async (req, res, next) => {
         const recipeExist = await Recipe.validateRecipe(req.user.id, recipeId);
 
         if(recipeExist){
-            res.status(404).json({
+            res.status(409).json({
                 success: false,
                 message: 'Recipe already saved..'
             })

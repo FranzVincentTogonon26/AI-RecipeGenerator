@@ -19,11 +19,11 @@ const ResultSection = ({ generatedRecipe, setGeneratedRecipe }) => {
             description: generatedRecipe.description,
             cuisine_type: generatedRecipe.cuisineType,
             difficulty: generatedRecipe.difficulty,
-            prep_time: generatedRecipe.prep_time,
-            cook_time: generatedRecipe.cook_time,
+            prep_time: generatedRecipe.prepTime,
+            cook_time: generatedRecipe.cookTime,
             servings: generatedRecipe.servings,
             instructions: generatedRecipe.instructions,
-            dietary_tags: generatedRecipe.dietary_tags || [],
+            dietary_tags: generatedRecipe.dietaryTags || [],
             ingredients: generatedRecipe.ingredients,
             nutrition: generatedRecipe.nutrition
         })
