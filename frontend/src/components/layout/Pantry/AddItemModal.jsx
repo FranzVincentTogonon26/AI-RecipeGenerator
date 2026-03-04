@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+import pantryService from '../../../services/pantryService';
+
 const AddItemModal = ({ 
     categoryList, 
     onClose, 
@@ -19,23 +21,22 @@ const AddItemModal = ({
 
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // UI-only add (no API call)
-        const newItem = {
-            id: Date.now(),
-            user_id: 1,
-            ...formData,
-            quantity: parseFloat(formData.quantity),
-            expiry_date: formData.expiry_date || null,
-            created_at: new Date().toISOString()
-        };
+        try {
+            setLoading(true);
+            const response = await pantryService.pantryAddItems(formData);
+            toast.success('Item added to pantry');
+            onSuccess(response);
+            setLoading(false);
+            onClose();
+        } catch (error) {
+            toast.error('Failed to ass item..', error)
+        } finally {
+            setLoading(false)
+        }
 
-        toast.success('Item added to pantry');
-        onSuccess(newItem);
-        setLoading(false);
-        onClose();
     };
 
   return (

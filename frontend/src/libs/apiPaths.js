@@ -10,7 +10,11 @@ export const API_PATHS = {
         GET_RECIPE_RECENT: '/api/recipes/recent'
     },
     PANTRY: {
-        GET_PANTRY_STATS: '/api/pantry/stats'
+        GET_PANTRY: '/api/pantry',
+        GET_PANTRY_STATS: '/api/pantry/stats',
+        GET_PANTRY_EXPIRING_SOON: '/api/pantry/expiring-soon',
+        GET_PANTRY_ADD: '/api/pantry',
+        GET_PANTRY_DELETE: (id) => `/api/pantry/${id}`
     },
     MEAL_PLAN: {
         GET_MEAL_PLAN_STATS: '/api/meal-plans/stats',

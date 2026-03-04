@@ -21,15 +21,15 @@ const QuickAction = () => {
 
         <Link
             to="/pantry"
-            className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all group"
+            className="bg-blue-100 border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-all group"
         >
             <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <UtensilsCrossed className="w-6 h-6 text-emerald-600" />
+                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <UtensilsCrossed className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                    <h3 className="font-semibold text-lg text-gray-900">Manage Pantry</h3>
-                    <p className="text-gray-600 text-sm">Add and track ingredients</p>
+                    <h3 className="font-semibold text-lg text-blue-600">Manage Pantry</h3>
+                    <p className="text-blue-800 text-sm">Add and track ingredients</p>
                 </div>
             </div>
         </Link>

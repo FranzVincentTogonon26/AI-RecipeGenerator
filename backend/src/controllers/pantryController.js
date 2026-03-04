@@ -89,9 +89,10 @@ export const updatePantryItem = async (req, res, next) => {
 
 // Delete pantry item
 export const deletePantryItem = async (req, res, next) => {
+
     try {
         const { id } = req.params;
-        const item = await PantryItem.delete(id, req.usser.id);
+        const item = await PantryItem.delete(id, req.user.id);
 
         if(!item){
             return res.status(404).json({

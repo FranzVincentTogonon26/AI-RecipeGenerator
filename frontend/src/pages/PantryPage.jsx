@@ -5,8 +5,11 @@ import Navbar from '../components/layout/Navbar'
 import AddItemModal from '../components/layout/Pantry/AddItemModal';
 import SearchAndFilter from '../components/layout/Pantry/SearchAndFilter';
 import ItemsGrid from '../components/layout/Pantry/ItemsGrid';
+import Spinner from '../components/layout/Spinner'
 
-import { CATEGORIES, dummyPantryItems } from '../data/dummyData';
+import pantryService from '../services/pantryService'
+
+import { CATEGORIES } from '../data/dummyData';
 
 const PantryPage = () => {
 
@@ -16,24 +19,45 @@ const PantryPage = () => {
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [loading, setLoading] = useState(false);
 
   const category = CATEGORIES;
 
   useEffect(() => {
-    setItems(dummyPantryItems);
-  }, []);
+    fetchDashboardData();
+    getExpiringItems();
+  }, [])
 
   useEffect(() => {
-    getExpiringItems();
     filterItems();
   }, [items, searchQuery, selectedCategory]);
 
-  const getExpiringItems = () => {
-    const today = new Date();
-    const count = dummyPantryItems.filter(
-        (item) => item.expiry_date && new Date(item.expiry_date) < today
-    ).length;
-    setExpiringItems(count);
+  const fetchDashboardData = async () => {
+    try {
+        setLoading(true);
+        const response = await pantryService.pantryItems();
+        setItems(response);
+    } catch (error) {
+        console.error('Failed to load pantry items', error)
+    } finally {
+        setLoading(false)
+    }
+  }
+
+  const getExpiringItems = async () => {
+    try {
+        setLoading(true);
+        const response = await pantryService.pantryItemsExpiring();
+        setExpiringItems(response);
+    } catch (error) {
+        console.error('Failed to load pantry items', error)
+    } finally {
+        setLoading(false)
+    }
+  }
+
+  const handleDeleteItem = (id) => {
+    setItems(prev => prev.filter(item => item.id !== id));
   };
 
   const filterItems = () => {
@@ -48,6 +72,12 @@ const PantryPage = () => {
     }
     setFilteredItems(filtered);
   };
+
+  if(loading){
+    return (
+      <Spinner />
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -69,14 +99,14 @@ const PantryPage = () => {
             </div>
 
           {/* Expiring Soon Alert */}
-            {expiringItems > 0 && (
+            {expiringItems.length > 0 && (
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
                     <div className="flex items-start gap-3">
                         <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5" />
                         <div>
                             <h3 className="font-medium text-amber-900">Items Expiring Soon</h3>
                             <p className="text-sm text-amber-700 mt-1 ">
-                                <span className="font-bold">{expiringItems}</span> item{expiringItems > 1 ? 's' : ''} expiring within 7 days
+                                <span className="font-bold">{expiringItems.length}</span> item{expiringItems.length > 1 ? 's' : ''} expiring within 7 days
                             </p>
                         </div>
                     </div>
@@ -95,6 +125,7 @@ const PantryPage = () => {
             {/* Items Grid */}
             <ItemsGrid 
                 filteredItems={filteredItems}
+                onDeleteItem={handleDeleteItem}
             />
               
         </div>
