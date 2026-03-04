@@ -58,6 +58,7 @@ const PantryPage = () => {
 
   const handleDeleteItem = (id) => {
     setItems(prev => prev.filter(item => item.id !== id));
+    setExpiringItems(prev => prev.filter(filterItem => filterItem.id !== id));
   };
 
   const filterItems = () => {
@@ -137,6 +138,7 @@ const PantryPage = () => {
                 onClose={() => setShowAddModal(false)}
                 onSuccess={(newItem) => {
                     setItems([...items, newItem]);
+                    getExpiringItems();
                 }}
             />
         )}
