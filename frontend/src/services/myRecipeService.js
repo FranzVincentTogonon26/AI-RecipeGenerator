@@ -19,9 +19,19 @@ const deleteRecipe = async (id) => {
     }
 }
 
+const getRecipeDetails = async (id) => {
+    try {
+        const response = await axiosInstance.get(API_PATHS.RECIPES.GET_RECIPE_DETAILS(id));
+        return response.data.data.recipe;
+    } catch (error) {
+        throw error.response?.data || { message: 'An unknown error occur' }
+    }
+}
+
 const myRecipeService = {
     myRecipeList,
-    deleteRecipe
+    deleteRecipe,
+    getRecipeDetails
 }
 
 export default myRecipeService;

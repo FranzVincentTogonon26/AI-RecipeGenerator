@@ -11,7 +11,8 @@ export const API_PATHS = {
         GENERATE_RECIPE: '/api/recipes/generate',
         SAVE_RECIPE: '/api/recipes',
         GET_RECIPES: '/api/recipes',
-        DELETE_RECIPE: (id) => `/api/recipes/${id}`
+        DELETE_RECIPE: (id) => `/api/recipes/${id}`,
+        GET_RECIPE_DETAILS: (id) => `/api/recipes/${id}`
     },
     PANTRY: {
         GET_PANTRY: '/api/pantry',

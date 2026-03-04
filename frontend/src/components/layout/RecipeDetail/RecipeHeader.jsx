@@ -4,6 +4,7 @@ import { Clock, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import ModalDelete from '../ModalDelete';
+import myRecipeService from '../../../services/myRecipeService';
 
 const RecipeHeader = ({ recipe }) => {
 
@@ -19,11 +20,14 @@ const RecipeHeader = ({ recipe }) => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
-
-    toast.success(`Recipe deleted.. ${deleteId}`);
-    navigate('/recipes');
-    
+  const handleConfirmDelete = async () => {
+    try {
+        await myRecipeService.deleteRecipe(deleteId)
+        toast.success('Recipe deleted');
+        navigate('/recipes');
+    } catch (error) {
+        toast.error('Failed to delete item.', error);
+    }
   }
 
   return (
