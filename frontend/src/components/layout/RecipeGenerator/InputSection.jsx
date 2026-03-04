@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Plus, Sparkles, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-import { CUISINES, COOKING_TIMES, DIETARY_OPTIONS, dummyGeneratedRecipe } from '../../../data/dummyData';
+import { CUISINES, COOKING_TIMES, DIETARY_OPTIONS } from '../../../data/dummyData';
+import generateRecipeService from '../../../services/generateRecipeService';
 
 const InputSection = ({generate}) => {
 
@@ -13,7 +14,27 @@ const InputSection = ({generate}) => {
   const [cookingTime, setCookingTime] = useState('medium');
   const [usePantry, setUsePantry] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [generatedRecipe, setGeneratedRecipe] = useState(null);
   const [generating, setGenerating] = useState(false);
+
+  // Load user references
+  useEffect(() => {
+    const fectUserPreperences = async () => {
+      try {
+        const response = await generateRecipeService.getUserPreferences();
+        setDietaryRestrictions(response.dietary_restrictions || [] );
+        setCuisineType(response.preferred_cuisines || 'Any' );
+        setServings(response.default_servings || 5 );
+      } catch (error) {
+        console.error('Failed to load User Preferences', error)
+      }
+    }
+    fectUserPreperences();
+  }, [])
+
+  useEffect(() => {
+    generate(generatedRecipe)
+  }, [generate, generatedRecipe])
 
   const addIngredient = () => {
     if(inputValue.trim() && !ingredients.includes(inputValue.trim())){
@@ -22,26 +43,37 @@ const InputSection = ({generate}) => {
     }
   }
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if(!usePantry && ingredients.length === 0){
       toast.error('Please add at least one ingredient or use pantry items.');
       return;
     }
 
-    setGenerating(true);
-
-    // Simulate API delay
-    setTimeout(() => {
-      generate(dummyGeneratedRecipe) 
-      toast.success('Recipe generated successully..');
-      setGenerating(false);
-    }, 1500)
+    try {
+        setGenerating(true);
+        const response = await generateRecipeService.generateRecipe({
+            ingredients,
+            usePantryIngredients: usePantry,
+            dietaryRestrictions,
+            cuisineType: cuisineType === 'Any' ? 'any' : cuisineType,
+            servings,
+            cookingTime
+        })
+        setGeneratedRecipe(response);
+        toast.success('Recipe generated successfully..')
+    } catch (error) {
+        toast.error(error.response?.data?.message || 'Failed to generate recipe..')
+    } finally {
+        setGenerating(false);
+    }
 
   }
 
-  const removeIngredient = () => {
-    setIngredients(ingredients.filter( i => i != ingredients ));
-  }
+  const removeIngredient = (ingredientToRemove) => {
+    setIngredients(prev =>
+      prev.filter(i => i !== ingredientToRemove)
+    );
+  };
 
   const toggleDietary = (option) => {
     if(dietaryRestrictions.includes(option)){

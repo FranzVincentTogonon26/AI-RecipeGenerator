@@ -7,7 +7,9 @@ export const API_PATHS = {
     },
     RECIPES: {
         GET_RECIPE_STATS: '/api/recipes/stats',
-        GET_RECIPE_RECENT: '/api/recipes/recent'
+        GET_RECIPE_RECENT: '/api/recipes/recent',
+        GENERATE_RECIPE: '/api/recipes/generate',
+        SAVE_RECIPE: '/api/recipes'
     },
     PANTRY: {
         GET_PANTRY: '/api/pantry',
@@ -19,5 +21,9 @@ export const API_PATHS = {
     MEAL_PLAN: {
         GET_MEAL_PLAN_STATS: '/api/meal-plans/stats',
         GET_MEAL_PLAN_UPCOMING: '/api/meal-plans/upcoming'
+    },
+    USER: {
+        GET_USER_PREFERENCES: '/api/users/profile',
+        
     }
 }
