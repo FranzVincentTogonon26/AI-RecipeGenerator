@@ -23,7 +23,10 @@ export const API_PATHS = {
     },
     MEAL_PLAN: {
         GET_MEAL_PLAN_STATS: '/api/meal-plans/stats',
-        GET_MEAL_PLAN_UPCOMING: '/api/meal-plans/upcoming'
+        GET_MEAL_PLAN_UPCOMING: '/api/meal-plans/upcoming',
+        GET_MEAL_PLAN_WEEKLY: '/api/meal-plans/weekly',
+        ADD_MEAL_PLAN: '/api/meal-plans',
+        DELETE_MEAL_PLAN: (id) => `/api/meal-plans/${id}`
     },
     USER: {
         GET_USER_PREFERENCES: '/api/users/profile',

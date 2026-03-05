@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import AddMealModal from '../MealPlan/AddMealModal'
 import ModalDelete from '../ModalDelete';
 
+import mealPlanService from '../../../services/mealPlanService';
+
 const CalendarGrid = ({
     weekStart,
     mealPlan,
@@ -31,19 +33,24 @@ const CalendarGrid = ({
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
-    const updatedPlan = { ...mealPlan };
-    Object.keys(updatedPlan).forEach(date => {
-        Object.keys(updatedPlan[date]).forEach(type => {
-            if (updatedPlan[date][type].id === deleteId) {
-                delete updatedPlan[date][type];
-            }
+  const handleConfirmDelete = async () => {
+    try {
+        await mealPlanService.deleteMealPlan(deleteId);
+        const updatedPlan = { ...mealPlan };
+        Object.keys(updatedPlan).forEach(date => {
+            Object.keys(updatedPlan[date]).forEach(type => {
+                if (updatedPlan[date][type].id === deleteId) {
+                    delete updatedPlan[date][type];
+                }
+            });
         });
-    });
-    setMealPlan(updatedPlan);
-    toast.success('Meal removed');
-    setIsDeleteModalOpen(false);
-    setDeleteId(null);
+        setMealPlan(updatedPlan);
+        toast.success('Meal removed');
+        setIsDeleteModalOpen(false);
+        setDeleteId(null);
+    } catch (error) {
+        toast.error('Failed to remove meal..', error)
+    } 
   };
 
   const getDayMeals = (dayIndex) => {
@@ -91,7 +98,7 @@ const CalendarGrid = ({
                                     {meal?.recipe_name}
                                 </p>
                                 <button
-                                    onClick={() => handleDeleteRequest(meal.id)}
+                                    onClick={() => handleDeleteRequest(meal?.id)}
                                     className="absolute top-1 right-1 p-1 bg-white rounded hover:bg-red-50 text-gray-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
                                 >
                                     <X className="w-4 h-4" />
@@ -123,7 +130,6 @@ const CalendarGrid = ({
                 setSelectedSlot(null);
             }}
             onSuccess={(newMeal) => {
-                // Add to local state
                 const updatedPlan = { ...mealPlan };
                 const date = selectedSlot.date;
                 if (!updatedPlan[date]) {

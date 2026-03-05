@@ -6,33 +6,69 @@ import WeekNavigation from '../components/layout/MealPlan/WeekNavigation';
 import WeekDisplay from '../components/layout/MealPlan/WeekDisplay';
 import CalendarGrid from '../components/layout/MealPlan/CalendarGrid';
 import MealStats from '../components/layout/MealPlan/MealStats';
+import Spinner from '../components/layout/Spinner'
+import toast from 'react-hot-toast';
 
-import { dummyMealPlans, dummyRecipes } from '../data/dummyData';
+import mealPlanService from '../services/mealPlanService';
 
 const MealPlannerPage = () => {
 
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date()));
   const [mealPlan, setMealPlan] = useState({});
   const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] =useState(false);
 
   useEffect(() => {
-    const loadMealPlan = () => {
-      // Organize dummy meals by date and meal type
-      const organized = {};
-      dummyMealPlans.forEach(meal => {
+    const fetchMealPlanData = async () => {
+      try {
+        setLoading(true);
+        const response = await mealPlanService.mealPlanData(weekStart);
+        const organized = {};
+          response.mealPlans.forEach(meal => {
           const dateKey = meal.meal_date;
-          if (!organized[dateKey]) {
-              organized[dateKey] = {};
-          }
-          organized[dateKey][meal.meal_type] = meal;
-      });
-      setMealPlan(organized);
-    };
+            if (!organized[dateKey]) {
+                organized[dateKey] = {};
+            }
+            organized[dateKey][meal.meal_type] = meal;
+          });
+        setMealPlan(organized);
+        setRecipes(response.recipes);
+        
+      } catch (error) {
+        toast.error('Failed to load meal plan data.', error)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-    loadMealPlan();
-    setRecipes(dummyRecipes);
+    fetchMealPlanData();
 
   }, [weekStart]);
+
+  const renderContent = () => {
+    if(loading){
+      return (
+        <Spinner />
+      )
+    }
+    return (
+      <>
+        {/* Week Display */}
+        <WeekDisplay weekStart={weekStart} />
+        
+        {/* Calendar Grid */}
+        <CalendarGrid 
+            weekStart={weekStart}
+            mealPlan={mealPlan}
+            setMealPlan={setMealPlan}
+            recipes={recipes}
+        />
+        
+        {/* Stats */}
+        <MealStats recipes={recipes} mealPlan={mealPlan} weekStart={weekStart} />
+      </>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -48,20 +84,7 @@ const MealPlannerPage = () => {
           <WeekNavigation weekStart={weekStart} setWeekStart={setWeekStart} />
           
         </div>
-        {/* Week Display */}
-        <WeekDisplay weekStart={weekStart} />
-        
-        {/* Calendar Grid */}
-        <CalendarGrid 
-            weekStart={weekStart}
-            mealPlan={mealPlan}
-            setMealPlan={setMealPlan}
-            recipes={recipes}
-        />
-        
-        {/* Stats */}
-        <MealStats recipes={recipes} mealPlan={mealPlan} weekStart={weekStart} />
-        
+        {renderContent()}
       </div>
     </div>
   )

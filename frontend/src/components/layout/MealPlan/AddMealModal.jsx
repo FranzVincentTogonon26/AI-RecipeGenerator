@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { format } from 'date-fns';
-import toast from 'react-hot-toast';
 import { ChefHat, X } from 'lucide-react';
+import toast from 'react-hot-toast';
+
+import mealPlanService from '../../../services/mealPlanService';
 
 const AddMealModal = ({
     date,
@@ -19,27 +21,27 @@ const AddMealModal = ({
         recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!selectedRecipe) {
             toast.error('Please select a recipe');
             return;
         }
 
-        // UI-only add
-        const recipe = recipes.find(r => r.id == selectedRecipe);
-        const newMeal = {
-            id: Date.now(),
-            recipe_id: selectedRecipe,
-            recipe_name: recipe.name,
-            meal_date: date,
-            meal_type: mealType,
-            created_at: new Date().toISOString()
-        };
-
-        toast.success('Meal added to plan');
-        onSuccess(newMeal);
-        setLoading(false);
+        try {
+            setLoading(true);
+            const response = await mealPlanService.addMeal({
+                recipe_id: selectedRecipe,
+                planned_date: date,
+                meal_type: mealType
+            });
+            toast.success('Meal added to plan');
+            onSuccess(response);
+        } catch (error) {
+            toast.error('Failed to add meal..', error)
+        } finally {
+            setLoading(false)
+        }
     };
 
   return (
@@ -85,7 +87,7 @@ const AddMealModal = ({
                                     name="recipe"
                                     value={recipe.id}
                                     checked={selectedRecipe === recipe.id}
-                                    onChange={(e) => setSelectedRecipe(Number(e.target.value))}
+                                    onChange={(e) => setSelectedRecipe(e.target.value)}
                                     className="radio radio-primary radio-sm text-emerald-500 border-gray-300 focus:ring-emerald-500"
                                 />
                                 <div className="flex-1">

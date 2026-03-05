@@ -3,6 +3,7 @@ import MealPlan from '../models/MealPlan.js'
 // add recipe to meal plan
 export const addToMealPlan = async (req, res, next) => {
     try {
+        
         const mealPlan = await MealPlan.create(req.user.id, req.body);
 
         res.status(201).json({
@@ -20,8 +21,15 @@ export const addToMealPlan = async (req, res, next) => {
 
 export const getWeeklyMealPlan = async (req, res, next) => {
     try {
-        const { start_date, weekStartDate } = req.query;
-        const startDate = start_date || weekStartDate;
+        const { startDate, endtDate} = req.query;
+        const start_date = startDate || endtDate;
+
+        if(!start_date){
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide start_date or weekStartDate..'
+            })
+        }
 
         const mealPlans = await MealPlan.getWeeklyPlan(req.user.id, startDate);
 
@@ -38,7 +46,7 @@ export const getWeeklyMealPlan = async (req, res, next) => {
 // get upcoming meals
 export const getUpcomingMeals = async (req, res, next) => {
     try {
-        const limit = parseInt(req.query.limit) || 5;
+        const limit = parseInt(req.query.limit) || 10;
         const meals = await MealPlan.getUpcoming(req.user.id, limit);
 
         res.json({

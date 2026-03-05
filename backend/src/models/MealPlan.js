@@ -7,11 +7,27 @@ class MealPlan {
         const date = planned_date || meal_date;
 
         const result = await db.query(
-            `INSERT INTO meal_plans ( user_id, recipe_id, meal_date, meal_type )
-             VALUES ( $1, $2, $3::date, $4 )
-             ON CONFLICT ( user_id, meal_date, meal_type )
-             DO UPDATE SET recipe_id = $2 
-             RETURNING * `, [userId,recipe_id, date, meal_type]
+            `WITH upsert AS (
+                INSERT INTO meal_plans (user_id, recipe_id, meal_date, meal_type)
+                VALUES ($1, $2, $3::date, $4)
+                ON CONFLICT (user_id, meal_date, meal_type)
+                DO UPDATE SET recipe_id = $2
+                RETURNING *
+             )
+             SELECT 
+                u.id,
+                u.user_id,
+                u.recipe_id,
+                u.meal_date,
+                u.meal_type,
+                u.created_at,
+                u.updated_at,
+                r.name as recipe_name, 
+                r.cook_time,
+                r.prep_time,
+                r.image_url
+             FROM upsert u
+             JOIN recipes r ON r.id = u.recipe_id;`, [userId,recipe_id, date, meal_type]
         );
         return result.rows[0];
     }
@@ -55,7 +71,7 @@ class MealPlan {
     }
 
     // Get Upcoming meals ( next 7 days )
-    static async getUpcoming( userId, limit = 5 ){
+    static async getUpcoming( userId, limit = 10 ){
         const result = await db.query(
             `SELECT mp.*, r.name as recipe_name, r.image_url
              FROM meal_plans mp JOIN recipes r ON mp.recipe_id = r.id
