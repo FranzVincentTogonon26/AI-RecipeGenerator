@@ -6,30 +6,38 @@ export const API_PATHS = {
         REGISTER: '/api/auth/register'
     },
     RECIPES: {
-        GET_RECIPE_STATS: '/api/recipes/stats',
-        GET_RECIPE_RECENT: '/api/recipes/recent',
-        GENERATE_RECIPE: '/api/recipes/generate',
-        SAVE_RECIPE: '/api/recipes',
-        GET_RECIPES: '/api/recipes',
-        DELETE_RECIPE: (id) => `/api/recipes/${id}`,
-        GET_RECIPE_DETAILS: (id) => `/api/recipes/${id}`
+        RECIPE_STATS: '/api/recipes/stats',
+        RECIPE_RECENT: '/api/recipes/recent',
+        RECIPE_GENERATE: '/api/recipes/generate',
+        RECIPE_ADD: '/api/recipes',
+        RECIPES: '/api/recipes',
+        RECIPE_DELETE: (id) => `/api/recipes/${id}`,
+        RECIPE_DETAILS: (id) => `/api/recipes/${id}`
     },
     PANTRY: {
-        GET_PANTRY: '/api/pantry',
-        GET_PANTRY_STATS: '/api/pantry/stats',
-        GET_PANTRY_EXPIRING_SOON: '/api/pantry/expiring-soon',
-        GET_PANTRY_ADD: '/api/pantry',
-        GET_PANTRY_DELETE: (id) => `/api/pantry/${id}`
+        PANTRIES: '/api/pantry',
+        PANTRY_STATS: '/api/pantry/stats',
+        PANTRY_EXPIRING_SOON: '/api/pantry/expiring-soon',
+        PANTRY_ADD: '/api/pantry',
+        PANTRY_DELETE: (id) => `/api/pantry/${id}`
     },
     MEAL_PLAN: {
-        GET_MEAL_PLAN_STATS: '/api/meal-plans/stats',
-        GET_MEAL_PLAN_UPCOMING: '/api/meal-plans/upcoming',
-        GET_MEAL_PLAN_WEEKLY: '/api/meal-plans/weekly',
-        ADD_MEAL_PLAN: '/api/meal-plans',
-        DELETE_MEAL_PLAN: (id) => `/api/meal-plans/${id}`
+        MEAL_PLAN_STATS: '/api/meal-plans/stats',
+        MEAL_PLAN_UPCOMING: '/api/meal-plans/upcoming',
+        MEAL_PLAN_WEEKLY: '/api/meal-plans/weekly',
+        MEAL_PLANS: '/api/meal-plans',
+        MEAL_PLAN_DELETE: (id) => `/api/meal-plans/${id}`
     },
     USER: {
-        GET_USER_PREFERENCES: '/api/users/profile',
+        USER_PREFERENCES: '/api/users/profile',
         
+    },
+    SHOPPING_LIST: {
+        SHOPPING_LIST: '/api/shopping-list',
+        SHOPPING_LIST_ADD: '/api/shopping-list',
+        DELETE_ALL_CHECKED: '/api/shopping-list/clear/checked',
+        ITEMS_ADD_TO_PANTRY: '/api/shopping-list/add-to-pantry',
+        SHOPPING_LIST_DELETE: (id) => `/api/shopping-list/${id}`,
+        TOGGLE_ITEM: (id) => `/api/shopping-list/${id}/toggle`
     }
 }

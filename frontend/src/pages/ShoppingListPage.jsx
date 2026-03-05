@@ -5,16 +5,18 @@ import Navbar from '../components/layout/Navbar'
 import ShoppingListItem from '../components/layout/ShoppingList/ShoppingListItem';
 import AddItemModal from '../components/layout/ShoppingList/AddItemModal';
 import ActionSection from '../components/layout/ShoppingList/ActionSection';
+import Spinner from '../components/layout/Spinner'
 
-import { dummyShoppingListItems } from '../data/dummyData';
+import shoppingListService from '../services/shoppingListService';
 
 const ShoppingListPage = () => {
 
   const [items, setItems] = useState([]);
   const [groupedItems, setGroupedItems] = useState({});
   const [showAddModal, setShowAddModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const checkedCount = items.filter(item => item.is_checked).length;
+  const checkedCount = items.filter(item => item?.is_checked).length;
   const totalCount = items.length;
 
   const organizeByCategory = (itemsList) => {
@@ -30,9 +32,17 @@ const ShoppingListPage = () => {
   };
 
   useEffect(() => {
-    const loadShoppingList = () => {
-      setItems(dummyShoppingListItems);
-      organizeByCategory(dummyShoppingListItems);
+    const loadShoppingList = async () => {
+      try {
+        setLoading(true);
+        const response = await shoppingListService.getShoppingList();
+        setItems(response);
+        organizeByCategory(response)
+      } catch (error) {
+        toast.error('Failed to load shopping list..', error)
+      } finally {
+        setLoading(false)
+      }
     };
 
     loadShoppingList();
@@ -48,37 +58,56 @@ const ShoppingListPage = () => {
 
     if (!confirm(`Add ${checkedCount} checked items to pantry?`)) return;
 
-    // UI-only add to pantry
-    const updatedItems = items.filter(item => !item.is_checked);
-    setItems(updatedItems);
-    organizeByCategory(updatedItems);
-    toast.success('Items added to pantry');
+    try {
+      shoppingListService.addItemToPantry();
+      const updatedItems = items.filter(item => !item.is_checked);
+      setItems(updatedItems);
+      organizeByCategory(updatedItems);
+      toast.success('Items added to pantry');
+    } catch (error) {
+      toast.error('Failed to add item in pantry..', error)
+    }
   }
 
-  const handleClearChecked = () => {
+  const handleClearChecked = async () => {
     if (!confirm('Remove all checked items?')) return;
 
-    // UI-only clear
-    const updatedItems = items.filter(item => !item.is_checked);
-    setItems(updatedItems);
-    organizeByCategory(updatedItems);
+    try {
+      shoppingListService.deleteAllChecked();
+      const updatedItems = items.filter(item => !item.is_checked);
+      setItems(updatedItems);
+      organizeByCategory(updatedItems);
     toast.success('Checked items cleared');
+    } catch (error) {
+      toast.error('Failed to delete all item cheked..', error)
+    }
   }
 
-  const handleToggleChecked = (id) => {
+  const handleToggleChecked = async (id) => {
     // UI-only toggle
     const updatedItems = items.map(item =>
         item.id === id ? { ...item, is_checked: !item.is_checked } : item
     );
-    setItems(updatedItems);
-    organizeByCategory(updatedItems);
+    
+    try {
+      shoppingListService.toggleItem(id);
+      toast.success('Item Checked..');
+      setItems(updatedItems);
+      organizeByCategory(updatedItems);
+    } catch (error) {
+      toast.error('Failed to check item..', error)
+    }
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
+  const renderContent = () => {
+    if(loading){
+      return (
+        <Spinner />
+      )
+    }
+    return (
+      <>
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900">Shopping List</h1>
@@ -108,7 +137,15 @@ const ShoppingListPage = () => {
                     organizeByCategory(updatedItems);
                 }}
         />
-        
+      </>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        { renderContent() }
       </div>
 
       {/* Add Item Modal */}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { X } from 'lucide-react';
 import toast from 'react-hot-toast';
+import shoppingListService from '../../../services/shoppingListService';
 
 const CATEGORIES = ['Produce', 'Dairy', 'Meat', 'Grains', 'Spices', 'Beverages', 'Other'];
 
@@ -17,25 +18,20 @@ const AddItemModal = ({
     });
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // UI-only add
-        const newItem = {
-            id: Date.now(),
-            ingredient_name: formData.ingredient_name,
-            quantity: parseFloat(formData.quantity),
-            unit: formData.unit,
-            category: formData.category,
-            is_checked: false,
-            from_meal_plan: false,
-            created_at: new Date().toISOString()
-        };
-
-        toast.success('Item added to shopping list');
-        onSuccess(newItem);
-        onClose();
-        setLoading(false);
+        try {
+            setLoading(true);
+            const response = await shoppingListService.addItem(formData);
+            toast.success('Item added to pantry');
+            onSuccess(response);
+            setLoading(false);
+            onClose();
+        } catch (error) {
+            toast.error('Failed to add item..', error)
+        } finally {
+            setLoading(false)
+        }
     };
     
   return (

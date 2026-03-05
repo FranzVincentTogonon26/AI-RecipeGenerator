@@ -30,10 +30,10 @@ const ActionSection = ({
                     </button>
                     <button
                         onClick={handleClearChecked}
-                        className="flex items-center gap-2 border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2.5 rounded-lg font-medium transition-colors"
+                        className="flex items-center gap-2 border bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white text-sm font-semibold  px-4 py-2.5 rounded-lg font-medium transition-colors"
                     >
                         <Trash2 className="w-5 h-5" />
-                        Clear Checked
+                        Delete All Checked
                     </button>
                 </>
             )}

@@ -3,7 +3,7 @@ import { API_PATHS } from '../libs/apiPaths'
 
 const pantryItems = async () => {
     try {
-        const response = await axiosInstance.get(API_PATHS.PANTRY.GET_PANTRY);
+        const response = await axiosInstance.get(API_PATHS.PANTRY.PANTRIES);
         return response.data.data.items;
     } catch (error) {
         throw error.response?.data || { message: 'An unknown error occur' }
@@ -12,7 +12,7 @@ const pantryItems = async () => {
 
 const pantryItemsExpiring = async () => {
     try {
-        const response = await axiosInstance.get(API_PATHS.PANTRY.GET_PANTRY_EXPIRING_SOON);
+        const response = await axiosInstance.get(API_PATHS.PANTRY.PANTRY_EXPIRING_SOON);
         return response.data.data.items;
     } catch (error) {
         throw error.response?.data || { message: 'An unknown error occur' }
@@ -21,7 +21,7 @@ const pantryItemsExpiring = async () => {
 
 const pantryAddItems = async (formData) => {
     try {
-        const response = await axiosInstance.post(API_PATHS.PANTRY.GET_PANTRY_ADD, {
+        const response = await axiosInstance.post(API_PATHS.PANTRY.PANTRY_ADD, {
             ...formData,
             quantity: parseFloat(formData.quantity),
             expiry_date: formData.expiry_date || null
@@ -34,7 +34,7 @@ const pantryAddItems = async (formData) => {
 
 const pantryDeleteItem = async (id) => {
     try {
-        const response = await axiosInstance.delete(API_PATHS.PANTRY.GET_PANTRY_DELETE(id) );
+        const response = await axiosInstance.delete(API_PATHS.PANTRY.PANTRY_DELETE(id) );
         return response.data.data.item;
     } catch (error) {
         throw error.response?.data || { message: 'An unknown error occur' }

@@ -7,8 +7,8 @@ const mealPlanData = async (weekStart) => {
         const startDate = format(weekStart, 'yyyy-MM-dd');
         const endtDate = format(addDays(weekStart, 6), 'yyyy-MM-dd');
         const [ mealPlanRes, recipesRes ] = await Promise.all([
-            axiosInstance.get(API_PATHS.MEAL_PLAN.GET_MEAL_PLAN_WEEKLY, { params: { startDate, endtDate } }),
-            axiosInstance.get(API_PATHS.RECIPES.GET_RECIPES)
+            axiosInstance.get(API_PATHS.MEAL_PLAN.MEAL_PLAN_WEEKLY, { params: { startDate, endtDate } }),
+            axiosInstance.get(API_PATHS.RECIPES.RECIPES)
         ])
 
         return {
@@ -23,7 +23,7 @@ const mealPlanData = async (weekStart) => {
 
 const addMeal = async ({ recipe_id, planned_date, meal_type }) => {
     try {
-        const response = await axiosInstance.post(API_PATHS.MEAL_PLAN.ADD_MEAL_PLAN, {
+        const response = await axiosInstance.post(API_PATHS.MEAL_PLAN.MEAL_PLANS, {
             recipe_id: recipe_id,
             planned_date: planned_date,
             meal_type: meal_type
@@ -36,7 +36,7 @@ const addMeal = async ({ recipe_id, planned_date, meal_type }) => {
 
 const deleteMealPlan = async (id) => {
     try {
-        const response = await axiosInstance.delete(API_PATHS.MEAL_PLAN.DELETE_MEAL_PLAN(id) );
+        const response = await axiosInstance.delete(API_PATHS.MEAL_PLAN.MEAL_PLAN_DELETE(id) );
         return response.data.data.mealPlan;
     } catch (error) {
         throw error.response?.data || { message: 'An unknown error occur' }

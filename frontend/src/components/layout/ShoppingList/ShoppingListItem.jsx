@@ -3,6 +3,7 @@ import { Check, Plus, ShoppingCart, X } from 'lucide-react'
 import toast from 'react-hot-toast';
 
 import ModalDelete from '../ModalDelete';
+import shoppingListService from '../../../services/shoppingListService';
 
 const ShoppingListItem = ({
     totalCount, 
@@ -20,11 +21,16 @@ const ShoppingListItem = ({
         setIsDeleteModalOpen(true);
     };
 
-    const handleConfirmDelete = () => {
-        onDelete(deleteId); 
-        toast.success('Meal removed');
-        setIsDeleteModalOpen(false);
-        setDeleteId(null);
+    const handleConfirmDelete = async () => {
+        try {
+            await shoppingListService.deleteItem(deleteId)
+            onDelete(deleteId); 
+            toast.success('Item removed');
+            setIsDeleteModalOpen(false);
+            setDeleteId(null);
+        } catch (error) {
+          toast.error('Failed to delete item..', error)  
+        }
     };
 
   return (

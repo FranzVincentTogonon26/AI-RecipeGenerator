@@ -66,7 +66,8 @@ class ShoopingList{
         
         const result = await db.query(
             `INSERT INTO shopping_list_items (user_id, ingredient_name, quantity, unit, category, from_meal_plan )
-             VALUES ($1, $2, $3, $4, $5, false)`, [userId, ingredient_name, quantity, unit, category]
+             VALUES ($1, $2, $3, $4, $5, false)
+             RETURNING * `, [userId, ingredient_name, quantity, unit, category]
         );
 
         return result.rows[0];
@@ -173,7 +174,7 @@ class ShoopingList{
 
             // delete checked item from shopping list
             await client.query(
-                'DELETE FROM shopping_list_items WHERE user_id = $1 AND is_checked = true'
+                'DELETE FROM shopping_list_items WHERE user_id = $1 AND is_checked = true', [userId]
             );
 
             await client.query('COMMIT');

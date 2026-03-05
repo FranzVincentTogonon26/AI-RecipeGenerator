@@ -48,7 +48,7 @@ export const addItem = async (req, res, next) => {
 
         res.status(201).json({
             success: true,
-            message: 'Item deleted to shopping list..',
+            message: 'Item Added to shopping list..',
             data: { item }
         })
 
@@ -96,7 +96,7 @@ export const toggleChecked = async (req, res, next) => {
 
         res.json({
             success: true,
-            data: { item }
+            message: 'Item checked..'
         })
 
     } catch (error) {
@@ -163,7 +163,7 @@ export const clearAll = async (req, res, next) => {
 // Add checked items to pantry
 export const addCheckedToPantry = async (req, res, next) => {
     try {
-        const items = await ShoppingList.addCheckedToPantry(req.user,id);
+        const items = await ShoppingList.addCheckedToPantry(req.user.id);
 
         res.json({
             success: true,

@@ -5,11 +5,11 @@ const dashboardData = async () => {
     try {
 
         const [recipesRes, pantryRes, mealPlanRes, recentRecipeRes, upcomingMealPlanRes] = await Promise.all([
-            axiosInstance.get(API_PATHS.RECIPES.GET_RECIPE_STATS),
-            axiosInstance.get(API_PATHS.PANTRY.GET_PANTRY_STATS),
-            axiosInstance.get(API_PATHS.MEAL_PLAN.GET_MEAL_PLAN_STATS),
-            axiosInstance.get(API_PATHS.RECIPES.GET_RECIPE_RECENT),
-            axiosInstance.get(API_PATHS.MEAL_PLAN.GET_MEAL_PLAN_UPCOMING)
+            axiosInstance.get(API_PATHS.RECIPES.RECIPE_STATS),
+            axiosInstance.get(API_PATHS.PANTRY.PANTRY_STATS),
+            axiosInstance.get(API_PATHS.MEAL_PLAN.MEAL_PLAN_STATS),
+            axiosInstance.get(API_PATHS.RECIPES.RECIPE_RECENT),
+            axiosInstance.get(API_PATHS.MEAL_PLAN.MEAL_PLAN_UPCOMING)
         ]);
         
         return {
