@@ -30,7 +30,7 @@ export const API_PATHS = {
     },
     USER: {
         USER_PREFERENCES: '/api/users/profile',
-        
+        UPDATE_USER_PREFERENCES: '/api/users/preferences'
     },
     SHOPPING_LIST: {
         SHOPPING_LIST: '/api/shopping-list',
