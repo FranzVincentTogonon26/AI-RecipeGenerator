@@ -1,8 +1,8 @@
-export const CATEGORIES = ['Vegetables', 'Fruits', 'Dairy', 'Meat', 'Grains', 'Spices', 'Other'];
+export const CATEGORIES = ['Vegetables', 'Fruits', 'Beverages', 'Meat', 'Grains', 'Spices', 'Other'];
 
-export const CUISINES = ['All', 'Italian', 'Mexican', 'Indian', 'Chinese', 'Japanese', 'Thai', 'French', 'Mediterranean', 'American'];
+export const CUISINES = ['All', 'Panlasang Pinoy', 'Japanese', 'American'];
 
-export const DIETARY_OPTIONS = ['Vegetarian', 'Vegan', 'Gluten-Free', 'Dairy-Free', 'Keto', 'Paleo'];
+export const DIETARY_OPTIONS = ['Vegetarian', 'Low-Carb', 'High-Protein', 'General Healthy Filipino Meals', 'Keto'];
 
 export const difficulties = ['All', 'easy', 'medium', 'hard'];
 
