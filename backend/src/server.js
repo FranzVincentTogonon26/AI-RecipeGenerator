@@ -2,6 +2,8 @@ import express from 'express'
 import cors from 'cors'
 
 import { ENV } from './config/env.js'
+import { connectDB } from './config/db.js';
+
 import rateLimiter from './middleware/rateLimiter.js'
 
 import authRoutes from './routes/authRoutes.js'
@@ -33,6 +35,20 @@ app.use('/api/recipes', recipeRoutes);
 app.use('/api/meal-plans', mealPlanRoutes);
 app.use('/api/shopping-list', shoppingRoutes);
 
-app.listen( ENV.PORT, () => {
-    console.log(`Server running on port ${ENV.PORT}`)
-} )
+/* -------------------- START SERVER -------------------- */
+
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    app.listen(ENV.PORT, () => {
+      console.log(`Server running on port ${ENV.PORT}`);
+    });
+
+  } catch (error) {
+    console.error('Server failed to start');
+    process.exit(1);
+  }
+};
+
+startServer();

@@ -5,19 +5,29 @@ const { Pool } = pkg;
 
 const pool = new Pool({
   connectionString: ENV.NEON_DB_URI,
-  ssl: ENV.NEON_DB_URI ? { rejectUnauthorized: false } : false
+  ssl: ENV.NEON_DB_URI ? { rejectUnauthorized: false } : false,
 });
 
 pool.on('connect', () => {
-  console.log('Connected to Neon Postgres Database');
+  console.log('PostgreSQL connected');
 });
 
 pool.on('error', (err) => {
-  console.error('Unexpected database error:', err);
-  process.exit(-1);
+  console.error('Unexpected DB error:', err);
+  process.exit(1);
 });
 
-export default {
-  pool,
-  query: (text, params) => pool.query(text, params),
+export const query = (text, params) => pool.query(text, params);
+
+export const connectDB = async () => {
+  try {
+    await pool.query('SELECT 1');
+    console.log('Database connection verified');
+  } catch (error) {
+    console.error('Failed to connect to database');
+    console.error(error);
+    process.exit(1);
+  }
 };
+
+export default pool;
